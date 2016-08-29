@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class MergeSort {
-    int[] sort(int[] array){
+    public static int[] sort(int[] array){
         int size = array.length;
         int mid = size/2;
         int[] leftArray = Arrays.copyOfRange(array, 0, mid);
@@ -14,12 +14,10 @@ public class MergeSort {
             rightArray = sort(rightArray);
         }
 
-        int [] mergeResult = merge(leftArray, rightArray);
-
-        return mergeResult;
+        return merge(leftArray, rightArray);
     }
 
-    private int[] merge(int[] leftArray, int[] rightArray) {
+    private static int[] merge(int[] leftArray, int[] rightArray) {
         int[] finalArray = new int[leftArray.length + rightArray.length];
         int i = 0;
         int j = 0;
@@ -50,8 +48,8 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        MergeSort mergeSort = new MergeSort();
-        int[] result = mergeSort.sort(new int[]{11,10,9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11});
+//        MergeSort mergeSort = new MergeSort();
+        int[] result = MergeSort.sort(new int[]{11,10,9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11});
         Arrays.stream(result).forEach(System.out::print);
     }
 }
