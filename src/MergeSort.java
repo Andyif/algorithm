@@ -1,55 +1,46 @@
 import java.util.Arrays;
 
-public class MergeSort {
-    public static int[] sort(int[] array){
-        int size = array.length;
-        int mid = size/2;
-        int[] leftArray = Arrays.copyOfRange(array, 0, mid);
-        int[] rightArray = Arrays.copyOfRange(array, mid, size);
-
-        if (leftArray.length > 1){
-            leftArray = sort(leftArray);
-        }
-        if (rightArray.length > 1){
-            rightArray = sort(rightArray);
-        }
-
-        return merge(leftArray, rightArray);
+public class MergeSort  {
+    public static void sort(Comparable[] a){
+        Comparable[] aux = new Comparable[a.length];
+        sort(a, aux, 0 ,a.length -1);
     }
 
-    private static int[] merge(int[] leftArray, int[] rightArray) {
-        int[] finalArray = new int[leftArray.length + rightArray.length];
-        int i = 0;
-        int j = 0;
-        int k = 0;
+    private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi){
+        if (hi <= lo) return;
+        int mid = lo + (hi - lo) / 2;
+        sort(a, aux, lo, mid);
+        sort(a, aux, mid+1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
 
-        while (i < leftArray.length && j < rightArray.length){
-            if (leftArray[i] < rightArray[j]){
-                finalArray[k] = leftArray[i];
-                i++;
-                k++;
+    private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi ) {
+        System.arraycopy(a, lo, aux, lo, hi + 1 - lo);
+
+        int i = lo;
+        int j = mid +1;
+
+        for (int k = lo; k <= hi; k++){
+            if(i > mid){
+                a[k] = aux[j++];
+            }else if (j > hi){
+                a[k] = aux[i++];
+            }else if(less(aux[j], aux[i])){
+                a[k] = aux[j++];
             }else {
-                finalArray[k] = rightArray[j];
-                j++;
-                k++;
+                a[k] = aux[i++];
             }
         }
+    }
 
-        //Append remains of a left or right arrays to final array
-        for (;i < leftArray.length; i++, k++){
-            finalArray[k] = leftArray[i];
-        }
-        for (;j < rightArray.length; j++, k++){
-            finalArray[k] = rightArray[j];
-        }
-//        Arrays.stream(finalArray).forEach(System.out::print);
-//        System.out.println();
-        return finalArray;
+    private static boolean less(Comparable comparable, Comparable comparable1) {
+        return comparable.compareTo(comparable1) < 0;
     }
 
     public static void main(String[] args) {
 //        MergeSort mergeSort = new MergeSort();
-        int[] result = MergeSort.sort(new int[]{11,10,9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11});
+        Integer[] result = new Integer[]{11,10,9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11};
+        MergeSort.sort(result);
         Arrays.stream(result).forEach(System.out::print);
     }
 }
