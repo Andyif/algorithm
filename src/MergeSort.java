@@ -25,16 +25,12 @@ public class MergeSort  {
                 a[k] = aux[j++];
             }else if (j > hi){
                 a[k] = aux[i++];
-            }else if(less(aux[j], aux[i])){
+            }else if(Utils.less(aux[j], aux[i])){
                 a[k] = aux[j++];
             }else {
                 a[k] = aux[i++];
             }
         }
-    }
-
-    private static boolean less(Comparable comparable, Comparable comparable1) {
-        return comparable.compareTo(comparable1) < 0;
     }
 
     public static void main(String[] args) {

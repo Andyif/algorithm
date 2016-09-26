@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class HeapSort {
     public int siftDownTimes;
-    private void build(int[] array){
+    private void build(Comparable[] array){
         int size = array.length;
         int lastTree = size/2;
 
@@ -27,20 +27,20 @@ public class HeapSort {
         return 2*i+2;
     }
 
-    private int[] siftDown(int[] array, int size, int i){
+    private Comparable[] siftDown(Comparable[] array, int size, int i){
         int maxIndex = i;
         int l = getLeftChild(i);
         int r = getRightChild(i);
 
-        if (l < size && array[l] > array[maxIndex]){
+        if (l < size && Utils.less(array[maxIndex], array[l])){
             maxIndex = l;
         }
-        if (r < size && array[r] > array[maxIndex]){
+        if (r < size && Utils.less(array[maxIndex], array[r])){
             maxIndex = r;
         }
         if (i != maxIndex){
             siftDownTimes++;
-            array = swap(array, i, maxIndex);
+            Utils.exch(array, i, maxIndex);
             siftDown(array, size, maxIndex);
         }
         return array;
@@ -55,7 +55,7 @@ public class HeapSort {
 
 
     public static void main(String[] args) {
-        int[] array = new int[15];
+        Integer[] array = new Integer[15];
 
         for (int i = 0; i < array.length; i++){
             array[i] = i;
